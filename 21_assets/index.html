@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21 Blackjack</title>
+    <script src="https://pygame-web.github.io/archives/0.9/pythons.js"></script>
+    <style>
+        body { 
+            background-color: #146428; 
+            color: #D4AF37; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            font-family: 'Comic Sans MS', cursive; 
+        }
+        #status { font-size: 24px; text-align: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div id="status">Preparing the Deck...</div>
+    <div id="pygame"></div>
+
+    <script>
+        async function start() {
+            const statusElement = document.getElementById('status');
+            
+            try {
+                // We fixed the syntax here: no extra semicolons or broken brackets
+                await Python.start("game.apk", {
+                    archive: "game.apk",
+                    type: "application/octet-stream"
+                });
+                
+                // If it starts successfully, we can hide the status message
+                statusElement.style.display = 'none';
+            } catch (error) {
+                statusElement.innerHTML = "Error loading game. Check if game.apk is in the folder.";
+                console.error(error);
+            }
+        }
+
+        // This triggers the start function once the page is ready
+        window.onload = start;
+    </script>
+</body>
+</html>
